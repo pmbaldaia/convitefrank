@@ -565,13 +565,6 @@ let noMoves = 0;
 function moveNoButton() {
   noMoves += 1;
 
-  const maxX = Math.max(10, finalActions.clientWidth - noButton.offsetWidth);
-  const maxY = 74;
-
-  noButton.style.position = "absolute";
-  noButton.style.left = `${Math.floor(Math.random() * maxX)}px`;
-  noButton.style.top = `${Math.floor(Math.random() * maxY)}px`;
-
   const labels = [
     "Não",
     "Tens a certeza?",
@@ -579,10 +572,26 @@ function moveNoButton() {
     "Não vale fugir 😄"
   ];
 
+  // Atualiza primeiro o texto para calcular o tamanho real do botão.
   noButton.textContent = labels[Math.min(noMoves, labels.length - 1)];
+  noButton.style.position = "absolute";
+
+  const areaWidth = finalActions.clientWidth;
+  const areaHeight = finalActions.clientHeight;
+  const buttonWidth = noButton.offsetWidth;
+  const buttonHeight = noButton.offsetHeight;
+
+  const maxX = Math.max(0, areaWidth - buttonWidth);
+  const maxY = Math.max(0, areaHeight - buttonHeight);
+
+  noButton.style.left = `${Math.floor(Math.random() * (maxX + 1))}px`;
+  noButton.style.top = `${Math.floor(Math.random() * (maxY + 1))}px`;
 }
 
-noButton.addEventListener("mouseenter", moveNoButton);
+// Só usa hover em equipamentos que realmente têm hover.
+if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  noButton.addEventListener("mouseenter", moveNoButton);
+}
 noButton.addEventListener("click", moveNoButton);
 
 noButton.addEventListener(
@@ -593,6 +602,15 @@ noButton.addEventListener(
   },
   { passive: false }
 );
+
+window.addEventListener("resize", () => {
+  if (noButton.style.position === "absolute") {
+    // Garante que uma rotação do telemóvel não deixa o botão fora do ecrã.
+    noButton.style.position = "relative";
+    noButton.style.left = "";
+    noButton.style.top = "";
+  }
+});
 
 /* =========================================================
    CONFETTI
