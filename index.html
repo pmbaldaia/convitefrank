@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#f8f5ef" />
+    <title>Uma pequena surpresa</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient--one"></div>
+    <div class="ambient ambient--two"></div>
+
+    <main class="experience">
+      <div class="wedding-backdrop" aria-hidden="true">
+        <span class="wedding-rings wedding-rings--left"></span>
+        <span class="wedding-rings  wedding-rings--right"></span>
+        <span class="wedding-spark wedding-spark--one">✦</span>
+        <span class="wedding-spark wedding-spark--two">✦</span>
+        <span class="wedding-heart">♡</span>
+      </div>
+
+      <section class="paper">
+        <div class="paper__frame"></div>
+
+        <header class="brand">
+          <img
+            src="assets/ap-logo-transparent.png"
+            alt="Logo AP"
+            class="brand__logo"
+          />
+        </header>
+
+        <div class="progress" id="progress" hidden>
+          <div class="progress__meta">
+            <span id="progressLabel">Desafio 1/4</span>
+            <span id="progressHint">25%</span>
+          </div>
+          <div class="progress__track"><span id="progressFill"></span></div>
+        </div>
+
+        <!-- 1. Intro -->
+        <section class="screen active" data-screen="intro">
+          <p class="kicker">UMA PEQUENA</p>
+          <h1 class="script-title">Surpresa</h1>
+          <p class="kicker">PARA TI</p>
+          <div class="mini-divider"><span>♡</span></div>
+          <p class="lead">Tenho uma missão especial para ti. Mas primeiro tens de chegar ao fim.</p>
+          <button class="btn btn--primary" data-go="name">
+            Começar <span>→</span>
+          </button>
+        </section>
+
+        <!-- 2. Name -->
+        <section class="screen" data-screen="name">
+          <h2>Antes de começar…</h2>
+          <p class="lead">Como te chamas?</p>
+
+          <div class="field">
+            <input
+              id="nameInput"
+              type="text"
+              autocomplete="given-name"
+              placeholder="Escreve o teu nome"
+            />
+          </div>
+
+          <p class="feedback" id="nameFeedback"></p>
+          <button class="btn btn--primary" id="nameContinue">
+            Continuar <span>→</span>
+          </button>
+        </section>
+
+        <!-- 3. Envelope -->
+        <section class="screen" data-screen="envelope">
+          <h2>Tens aqui alguns desafios.</h2>
+          <p>Completa-os para descobrires a mensagem final.</p>
+
+          <button
+            class="envelope"
+            id="openEnvelope"
+            aria-label="Abrir envelope"
+          >
+            <span class="envelope__paper"></span>
+            <span class="envelope__back"></span>
+            <span class="envelope__left"></span>
+            <span class="envelope__right"></span>
+            <span class="envelope__flap"></span>
+            <span class="envelope__seal">AP</span>
+          </button>
+
+          <button class="btn btn--primary" id="openEnvelopeButton">
+            Abrir envelope
+          </button>
+        </section>
+
+        <!-- 4. Challenge 1 -->
+        <section class="screen" data-screen="choices">
+          <h2>Aquecimento</h2>
+          <p>Escolhe <strong>3 ingredientes</strong> para um dia memorável.</p>
+
+          <div class="choice-grid" id="choiceGrid"></div>
+          <p class="feedback" id="choiceFeedback"></p>
+          <button class="btn btn--primary" id="choiceContinue" disabled>
+            Continuar <span>→</span>
+          </button>
+        </section>
+
+        <!-- 5. Challenge 2 -->
+        <section class="screen" data-screen="memory">
+          <h2>Memória</h2>
+          <p>Encontra todos os pares.</p>
+
+          <div class="memory-intro" id="memoryIntro">
+            <p class="memory-intro__text">
+              Tens 12 cartas. Encontra os 6 pares e prova que estás preparado.
+            </p>
+            <button class="btn btn--primary" id="memoryStartButton">
+              Começar memória
+            </button>
+          </div>
+
+          <div class="memory-game" id="memoryGame" hidden>
+            <div class="memory-grid" id="memoryGrid"></div>
+
+            <div class="memory-meta">
+              <span>Movimentos: <strong id="moves">0</strong></span>
+              <span>Tempo: <strong id="timer">00:00</strong></span>
+            </div>
+
+            <p class="feedback" id="memoryFeedback"></p>
+            <button class="btn btn--ghost" id="memoryRestartButton">
+              Recomeçar memória
+            </button>
+          </div>
+        </section>
+
+        <!-- 6. Challenge 3 -->
+        <section class="screen" data-screen="clues">
+          <h2>Segue as pistas</h2>
+          <p>Descobre a palavra secreta.</p>
+
+          <div class="clue-grid">
+            <article class="clue-card">
+              <span class="clue-icon">◯</span>
+              <strong>Começa por D</strong>
+            </article>
+            <article class="clue-card">
+              <span class="clue-icon">♡</span>
+              <strong>Tem 9 letras</strong>
+            </article>
+            <article class="clue-card">
+              <span class="clue-icon">♙</span>
+              <strong>Acontece antes do grande dia</strong>
+            </article>
+            <article class="clue-card">
+              <span class="clue-icon">✦</span>
+              <strong>É para ficar na memória</strong>
+            </article>
+          </div>
+
+          <div class="word-slots" id="clueSlots"></div>
+          <div class="letter-bank" id="clueLetters"></div>
+          <div class="button-row">
+            <button class="btn btn--ghost" id="clueReset">Limpar</button>
+            <button class="btn btn--primary" id="clueCheck" disabled>
+              Confirmar
+            </button>
+          </div>
+          <p class="feedback" id="clueFeedback"></p>
+        </section>
+
+        <!-- 7. Challenge 4 -->
+        <section class="screen" data-screen="final-code">
+          <h2>Último desafio</h2>
+          <p>Coloca as letras na ordem certa.</p>
+
+          <div class="word-slots word-slots--name" id="nameSlots"></div>
+          <div class="letter-bank" id="nameLetters"></div>
+
+          <div class="button-row">
+            <button class="btn btn--ghost" id="nameReset">Limpar</button>
+            <button class="btn btn--primary" id="nameCheck" disabled>
+              Revelar mensagem <span>→</span>
+            </button>
+          </div>
+          <p class="feedback" id="finalCodeFeedback"></p>
+        </section>
+
+        <!-- 8. Almost -->
+        <section class="screen" data-screen="almost">
+          <h1 class="script-title script-title--small">Quase lá…</h1>
+          <p class="lead">Prepara-te, a mensagem está a chegar.</p>
+          <div class="mini-divider"><span>♡</span></div>
+          <div class="loading-line" role="progressbar" aria-label="A preparar a mensagem" aria-valuemin="0" aria-valuemax="100">
+            <span></span>
+          </div>
+        </section>
+
+        <!-- 9. Message 1 -->
+        <section class="screen message-screen invite-copy" data-screen="message-1">
+          <h1 class="script-title script-title--name">Francisco,</h1>
+          <p>
+            Tenho uma missão muito importante para te confiar… e não vale fugir!
+          </p>
+          <p>
+            O casamento ainda vem aí, mas antes disso há uma tradição que precisa de alguém capaz de pegar no comando e transformar um dia normal numa história para contar durante anos.
+          </p>
+          <button class="btn btn--primary" data-go="message-2">
+            Continuar <span>→</span>
+          </button>
+        </section>
+
+        <!-- 10. Message 2 -->
+        <section class="screen message-screen invite-copy" data-screen="message-2">
+          <h1 class="script-title script-title--name">Francisco,</h1>
+          <p>
+            E é aqui que entras tu: ideias, plano, malta, surpresas e aquele equilíbrio difícil entre uma despedida épica e eu chegar inteiro ao casamento.
+          </p>
+          <p>
+            Dou-te liberdade criativa… dentro dos limites da lei e, de preferência, sem eu ter de mudar de país no dia seguinte! 😄
+          </p>
+          <button class="btn btn--primary" data-go="message-3">
+            Continuar <span>→</span>
+          </button>
+        </section>
+
+        <!-- 11. Question -->
+        <section class="screen question-screen invite-copy" data-screen="message-3">
+          <h1 class="script-title script-title--name">Francisco,</h1>
+          <p>
+            Não quero saber do plano antes do tempo. Quero só saber se posso confiar em ti para juntar a malta e tratar desta missão como deve ser.
+          </p>
+
+          <h2 class="script-question">Aceitas organizar a minha despedida de solteiro?</h2>
+          <div class="mini-divider"><span>♡</span></div>
+
+          <div class="final-actions" id="finalActions">
+            <button class="btn btn--yes" id="yesButton">Sim, trato disso! 🍻</button>
+            <button class="btn btn--no" id="noButton">Não</button>
+          </div>
+        </section>
+
+        <!-- 12. Success -->
+        <section class="screen" data-screen="success">
+          <div class="petals" aria-hidden="true">❧ ❦ ❧</div>
+          <h2>Sabia que podia</h2>
+          <h1 class="script-title script-title--small">contar contigo!</h1>
+          <p class="lead">Agora a missão é oficialmente tua. Eu não vi nada, não sei de nada! 😄</p>
+          <div class="mini-divider"><span>♡</span></div>
+          <button class="btn btn--primary" data-go="certificate">
+            Ver missão oficial
+          </button>
+        </section>
+
+        <!-- 13. Certificate -->
+        <section class="screen invite-copy" data-screen="certificate">
+          <article class="certificate">
+            <p class="certificate__eyebrow">MISSÃO OFICIAL</p>
+            <h2 class="script-title script-title--small">Organizador</h2>
+            <h3>Francisco</h3>
+            <div class="certificate__rule"></div>
+            <p>
+              Ficas oficialmente responsável por organizar a despedida de solteiro do Pedro: juntar a equipa, preparar o plano e garantir memórias dignas da ocasião.
+            </p>
+            <div class="certificate__footer">
+              <div>
+                <span class="signature">Pedro</span>
+                <small>29 de abril de 2028</small>
+              </div>
+              <div class="certificate__seal">
+                <img
+                  src="assets/ap-logo-transparent.png"
+                  alt="Logo AP"
+                  class="brand__logo"
+                />
+              </div>
+            </div>
+          </article>
+
+          <button class="btn btn--primary" data-go="thanks">Continuar</button>
+        </section>
+
+        <!-- 14. Thanks -->
+        <section class="screen invite-copy" data-screen="thanks">
+          <h1 class="script-title script-title--small">Missão entregue, Francisco!</h1>
+          <p class="lead">
+            Agora é contigo. Surpreende-me — mas lembra-te que ainda tenho um casamento depois disto! 😄
+          </p>
+          <div class="mini-divider"><span>♡</span></div>
+          <div class="signature signature--big">Pedro</div>
+          <button class="btn btn--ghost" id="restart">Recomeçar</button>
+        </section>
+      </section>
+    </main>
+
+    <div id="confettiLayer" aria-hidden="true"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
